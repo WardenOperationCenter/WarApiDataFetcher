@@ -22,18 +22,14 @@ public class ApplicationMain implements QuarkusApplication {
 
  
   public static void processStaticData(){
-       WarApiClient shard3Client = QuarkusRestClientBuilder.newBuilder()
-            .baseUri(URI.create("https://war-service-live-3.foxholeservices.com/api"))
-            .build(WarApiClient.class);
+    WarApiClient shard3Client = WarApiClient.instanciate("https://war-service-live.foxholeservices.com/api");
 
-            Set<String> mapNamesList = shard3Client.mapNamesList();
-            String firstMap = "LochMorHex";
-            System.out.println(mapNamesList);
-            System.out.println(shard3Client.warStatus());
-            System.out.println(shard3Client.mapWarReport(firstMap));
-            System.out.println(shard3Client.mapStaticData(firstMap));
-            System.out.println(shard3Client.mapDynamicData(firstMap));
-
-
+    Set<String> mapNamesList = shard3Client.mapNamesList();
+    String firstMap = "LochMorHex";
+    System.out.println(mapNamesList);
+    System.out.println(shard3Client.warStatus());
+    System.out.println(shard3Client.mapWarReport(firstMap));
+    System.out.println(shard3Client.mapStaticData(firstMap));
+    System.out.println(shard3Client.mapDynamicData(firstMap));
   }
 }

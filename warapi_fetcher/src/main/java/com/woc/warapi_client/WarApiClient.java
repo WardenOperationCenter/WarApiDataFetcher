@@ -1,11 +1,13 @@
 package com.woc.warapi_client;
 
+import java.net.URI;
 import java.util.Set;
 
 import com.woc.warapi_client.warapi_client.responses.MapData;
 import com.woc.warapi_client.warapi_client.responses.WarMapReport;
 import com.woc.warapi_client.warapi_client.responses.WarStatus;
 
+import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -35,5 +37,9 @@ public interface WarApiClient {
     @GET
     public WarMapReport mapWarReport(@PathParam("map") String map);
     
-    
+    public static WarApiClient instanciate(String uri){
+        return QuarkusRestClientBuilder.newBuilder()
+            .baseUri(URI.create(uri))
+            .build(WarApiClient.class);
+    }
 } 
