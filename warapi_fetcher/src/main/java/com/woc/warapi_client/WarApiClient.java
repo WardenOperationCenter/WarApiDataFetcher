@@ -1,45 +1,40 @@
 package com.woc.warapi_client;
 
-import java.net.URI;
 import java.util.Set;
 
-import com.woc.warapi_client.warapi_client.responses.MapData;
-import com.woc.warapi_client.warapi_client.responses.WarMapReport;
-import com.woc.warapi_client.warapi_client.responses.WarStatus;
+import com.woc.warapi_client.dto.MapData;
+import com.woc.warapi_client.dto.WarMapReport;
+import com.woc.warapi_client.dto.WarStatus;
 
-import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
+import jakarta.enterprise.inject.Default;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 
 @Path("/worldconquest")
+@RegisterRestClient(baseUri = "https://war-service-live.foxholeservices.com/api")
+@Default
 public interface WarApiClient {
 
     @Path("/war")
     @GET
-    public WarStatus warStatus();
+    WarStatus warStatus();
 
     @Path("/maps")
     @GET
-    public Set<String> mapNamesList();
+    Set<String> mapNamesList();
 
     @Path("/maps/{map}/static")
     @GET
-    public MapData mapStaticData(@PathParam("map") String map);
+    MapData mapStaticData(@PathParam("map") String map);
 
     @Path("/maps/{map}/dynamic/public")
     @GET
-    public MapData mapDynamicData(@PathParam("map") String map);
+    MapData mapDynamicData(@PathParam("map") String map);
 
     @Path("/warReport/{map}")
     @GET
-    public WarMapReport mapWarReport(@PathParam("map") String map);
-    
-    public static WarApiClient instanciate(String uri){
-        return QuarkusRestClientBuilder.newBuilder()
-            .baseUri(URI.create(uri))
-            .build(WarApiClient.class);
-    }
-} 
+    WarMapReport mapWarReport(@PathParam("map") String map);
+}
