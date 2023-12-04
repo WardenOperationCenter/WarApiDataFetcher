@@ -73,30 +73,40 @@ public class WarApiService {
         Log.info(String.format("Updating data of war %s", warStatusEntity.getWarId()));
 
         for (FoxholeMapEntity foxholeMapEntity : FoxholeMapEntity.listAllByWarID(warStatusEntity.getWarId())) {
-            Log.info(String.format("\tProcessing map %s", foxholeMapEntity.getName()));
+            this.handleMapDynamicData(warApiClient, foxholeMapEntity);
+        }
+    }
 
-            Optional<EtagEntity> optionalEtags = EtagEntity.findByIdOptional(foxholeMapEntity.getId());
-            EtagEntity existingEtag = optionalEtags.orElseGet(() -> new EtagEntity().setId(foxholeMapEntity.getId()));
+    private void handleMapDynamicData(WarApiClient warApiClient, FoxholeMapEntity foxholeMapEntity) {
+        Log.info(String.format("\tProcessing map %s", foxholeMapEntity.getName()));
 
-            RestResponse<WarMapReport> warMapReport = warApiClient.mapWarReport(foxholeMapEntity.getName(), existingEtag.getReportEtag());
+        EtagEntity existingEtag = (EtagEntity) EtagEntity
+                .findByIdOptional(foxholeMapEntity.getId())
+                .orElseGet(() -> new EtagEntity().setId(foxholeMapEntity.getId()));
+
+        //Handle war report
+        try (RestResponse<WarMapReport> warMapReport = warApiClient.mapWarReport(foxholeMapEntity.getName(), existingEtag.getReportEtag())) {
             if (HttpResponseStatus.NOT_MODIFIED.code() == warMapReport.getStatus()) {
                 Log.info("\t\tWar Report Did not changed since last query");
             } else {
-                existingEtag.setReportEtag("\""+warMapReport.getEntity().version()+"\"");
+                existingEtag.setReportEtag("\"" + warMapReport.getEntity().version() + "\"");
                 MapWarReportEntity.from(warMapReport.getEntity(), foxholeMapEntity.getId()).persist();
                 Log.info("\t\tPersisting War Report");
             }
+        }
 
-            RestResponse<MapData> mapData = warApiClient.mapDynamicData(foxholeMapEntity.getName(), existingEtag.getItemsEtag());
+        //Handle Dynamic Items
+        try (RestResponse<MapData> mapData = warApiClient.mapDynamicData(foxholeMapEntity.getName(), existingEtag.getItemsEtag())) {
             if (HttpResponseStatus.NOT_MODIFIED.code() == mapData.getStatus()) {
                 Log.info("\t\tItem Report Did not changed since last query");
             } else {
-                existingEtag.setItemsEtag("\""+mapData.getEntity().version()+"\"");
+                existingEtag.setItemsEtag("\"" + mapData.getEntity().version() + "\"");
                 MapItemsReportEntity.from(mapData.getEntity(), foxholeMapEntity.getId()).persist();
                 Log.info("\t\tPersisting Item Report");
             }
-
-            existingEtag.persistOrUpdate();
         }
+
+        //Update etags for next query
+        existingEtag.persistOrUpdate();
     }
 }
