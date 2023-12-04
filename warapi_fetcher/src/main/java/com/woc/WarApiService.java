@@ -10,8 +10,10 @@ import com.woc.warapi_client.WarApiClient;
 import com.woc.warapi_client.dto.MapData;
 import com.woc.warapi_client.dto.WarMapReport;
 import com.woc.warapi_client.dto.WarStatus;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.jboss.resteasy.reactive.RestResponse;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -72,21 +74,29 @@ public class WarApiService {
 
         for (FoxholeMapEntity foxholeMapEntity : FoxholeMapEntity.listAllByWarID(warStatusEntity.getWarId())) {
             Log.info(String.format("\tProcessing map %s", foxholeMapEntity.getName()));
-            //TODO Handle header to avoid fetching same data
-            WarMapReport warMapReport = warApiClient.mapWarReport(foxholeMapEntity.getName());
-            if (MapWarReportEntity.findByIdOptional(new MapDynamicDataId(foxholeMapEntity.getId(), warMapReport.version())).isEmpty()) {
-                MapWarReportEntity.from(warMapReport, foxholeMapEntity.getId()).persist();
-                Log.info("\t\tPersisting War Report");
+
+            RestResponse<WarMapReport> warMapReport = warApiClient.mapWarReport(foxholeMapEntity.getName(), MapWarReportEntity.findEtagByMapId(foxholeMapEntity.getId()));
+            if (HttpResponseStatus.NOT_MODIFIED.code() == warMapReport.getStatus()) {
+                Log.info("\t\tWar Report Did not changed since last query");
             } else {
-                Log.info("\t\tFetched War Report but data is already present, skipping");
+                if (MapWarReportEntity.findByIdOptional(new MapDynamicDataId(foxholeMapEntity.getId(), warMapReport.getEntity().version())).isEmpty()) {
+                    MapWarReportEntity.from(warMapReport.getEntity(), foxholeMapEntity.getId()).persist();
+                    Log.info("\t\tPersisting War Report");
+                } else {
+                    Log.info("\t\tFetched War Report but data is already present, skipping");
+                }
             }
 
-            MapData mapData = warApiClient.mapDynamicData(foxholeMapEntity.getName());
-            if (MapItemsReportEntity.findByIdOptional(new MapDynamicDataId(foxholeMapEntity.getId(), mapData.version())).isEmpty()) {
-                MapItemsReportEntity.from(mapData, foxholeMapEntity.getId()).persist();
-                Log.info("\t\tPersisting Item Report");
+            RestResponse<MapData> mapData = warApiClient.mapDynamicData(foxholeMapEntity.getName(), MapItemsReportEntity.findEtagByMapId(foxholeMapEntity.getId()));
+            if (HttpResponseStatus.NOT_MODIFIED.code() == mapData.getStatus()) {
+                Log.info("\t\tItem Report Did not changed since last query");
             } else {
-                Log.info("\t\tFetched Item Report but data is already present, skipping");
+                if (MapItemsReportEntity.findByIdOptional(new MapDynamicDataId(foxholeMapEntity.getId(), mapData.getEntity().version())).isEmpty()) {
+                    MapItemsReportEntity.from(mapData.getEntity(), foxholeMapEntity.getId()).persist();
+                    Log.info("\t\tPersisting Item Report");
+                } else {
+                    Log.info("\t\tFetched Item Report but data is already present, skipping");
+                }
             }
         }
     }

@@ -10,8 +10,10 @@ import com.woc.warapi_client.dto.WarStatus;
 import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
 import jakarta.enterprise.inject.Default;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import org.jboss.resteasy.reactive.RestResponse;
 
 @Path("/worldconquest")
 @Default
@@ -31,11 +33,11 @@ public interface WarApiClient {
 
     @Path("/maps/{map}/dynamic/public")
     @GET
-    MapData mapDynamicData(@PathParam("map") String map);
+    RestResponse<MapData> mapDynamicData(@PathParam("map") String map, @HeaderParam("If-None-Match") String etag);
 
     @Path("/warReport/{map}")
     @GET
-    WarMapReport mapWarReport(@PathParam("map") String map);
+    RestResponse<WarMapReport> mapWarReport(@PathParam("map") String map, @HeaderParam("If-None-Match") String etag);
 
     static WarApiClient instantiate(String endpoint) {
         return QuarkusRestClientBuilder.newBuilder()

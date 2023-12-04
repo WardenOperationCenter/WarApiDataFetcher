@@ -2,13 +2,3 @@ quarkus:
   mongodb:
     connection-string: "mongodb://localhost:27017"
     database: "Test"
-
-warapi_fetcher:
-  shards: 
-    - name: "Able"
-      URI: "https://war-service-live.foxholeservices.com/api"
-    - name: "Bravo"
-      URI: "https://war-service-live-2.foxholeservices.com/api"
-    - name: "Charlie"
-      URI: "https://war-service-live-3.foxholeservices.com/api"
-

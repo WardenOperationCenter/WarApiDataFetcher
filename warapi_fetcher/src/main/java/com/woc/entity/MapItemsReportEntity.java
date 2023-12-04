@@ -4,6 +4,7 @@ import com.woc.warapi_client.dto.MapData;
 import com.woc.warapi_client.dto.MapItem;
 import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import io.quarkus.panache.common.Sort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,5 +37,12 @@ public class MapItemsReportEntity extends PanacheMongoEntityBase {
                 .setScorchedVictoryTowns(data.scorchedVictoryTowns())
                 .setMapItems(data.mapItems())
                 .setLastUpdated(Instant.ofEpochMilli(data.lastUpdated()));
+    }
+
+    public static String findEtagByMapId(FoxholeMapEntity.Id id) {
+        List<MapWarReportEntity> mapData = list("_id.mapId", Sort.by("_id.version").descending(), id);
+        //TODO Fix this query, returns nothing
+        int latestVersion = mapData.stream().findFirst().map(mapWarReportEntity -> mapWarReportEntity.getId().getVersion()).orElse(-1);
+        return String.format(String.format("\"%s\"", latestVersion));
     }
 } 
