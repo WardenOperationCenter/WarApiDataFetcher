@@ -5,9 +5,12 @@ import io.quarkus.logging.Log;
 import io.quarkus.picocli.runtime.annotations.TopCommand;
 import io.quarkus.scheduler.Scheduler;
 import jakarta.inject.Inject;
+import lombok.SneakyThrows;
 import picocli.CommandLine;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 
 
 @TopCommand
@@ -49,7 +52,7 @@ class DaemonFetchCommand implements Runnable {
     @Inject
     WarApiService warApiService;
 
-    @CommandLine.Option(names = {"-i", "--interval"}, description = "Interval used to fetch data (Follows ISO 8601 duration format)", defaultValue = "15m")
+    @CommandLine.Option(names = {"-c", "--cron"}, description = "Cron used to fetch data ", defaultValue = "0 0/10 * * * ?")
     String interval;
     private Thread runningThread;
 
@@ -57,17 +60,21 @@ class DaemonFetchCommand implements Runnable {
 
     private void scheduleJob() {
         scheduler.newJob(JOB_NAME)
-                .setInterval(interval)
+                .setCron(interval)
                 .setTask(executionContext -> {
                     runningThread = Thread.currentThread();
                     Log.info("Running job to DL data");
+                    Instant start = Instant.now();
                     warApiService.fetchAllServersDynamicData();
-                    Log.info("Job ended");
+                    Instant end = Instant.now();
+                    Duration timeElapsed = Duration.between(start, end);
+                    Log.info(String.format("Job ended in %ss %sms",  timeElapsed.toSeconds(), timeElapsed.toMillisPart()));
                     runningThread = null;
                 }).schedule();
-        Log.info(String.format("Setup download of data every %s", interval));
+        Log.info(String.format("Setup download of data with following cron '%s'", interval));
     }
 
+    @SneakyThrows(InterruptedException.class)
     @Override
     public void run() {
         Log.info("Starting WarApiFetcher in daemon mode");
@@ -81,7 +88,7 @@ class DaemonFetchCommand implements Runnable {
                 runningThread.join();
             }
             Log.info("Closing application");
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             Log.info("Closing application (Interrupted)");
         }
     }
