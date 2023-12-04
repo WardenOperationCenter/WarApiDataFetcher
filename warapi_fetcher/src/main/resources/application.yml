@@ -1,7 +1,7 @@
 quarkus:
   mongodb:
     connection-string: "mongodb://localhost:27017"
-    database: "Test"
+    database: "WoC"
   scheduler:
     start-mode: forced
   log:

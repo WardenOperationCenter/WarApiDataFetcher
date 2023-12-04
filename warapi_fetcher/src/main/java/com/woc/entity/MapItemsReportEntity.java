@@ -34,6 +34,6 @@ public class MapItemsReportEntity extends PanacheMongoEntity {
                 .setVersion(data.version())
                 .setScorchedVictoryTowns(data.scorchedVictoryTowns())
                 .setMapItems(data.mapItems())
-                .setLastUpdated(Instant.ofEpochMilli(data.lastUpdated()));
+                .setLastUpdated(data.lastUpdated() == null ? null : Instant.ofEpochMilli(data.lastUpdated()));
     }
 } 
