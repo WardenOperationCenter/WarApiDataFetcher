@@ -1,12 +1,8 @@
 package com.woc.warapi_client;
 
-import java.net.URI;
-import java.util.Set;
-
 import com.woc.warapi_client.dto.MapData;
 import com.woc.warapi_client.dto.WarMapReport;
 import com.woc.warapi_client.dto.WarStatus;
-
 import io.quarkus.rest.client.reactive.QuarkusRestClientBuilder;
 import jakarta.enterprise.inject.Default;
 import jakarta.ws.rs.GET;
@@ -14,6 +10,9 @@ import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import org.jboss.resteasy.reactive.RestResponse;
+
+import java.net.URI;
+import java.util.Set;
 
 @Path("/worldconquest")
 @Default
