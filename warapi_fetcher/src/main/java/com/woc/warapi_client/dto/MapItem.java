@@ -1,4 +1,6 @@
 package com.woc.warapi_client.dto;
 
-public record MapItem(String teamId, int iconType, double x, double y, int flags, int viewDirection) {
+import com.woc.Faction;
+
+public record MapItem(Faction teamId, int iconType, double x, double y, int flags, int viewDirection) {
 } 

@@ -1,8 +1,9 @@
 package com.woc;
 
+import com.woc.entity.ShardConfEntity;
+import io.quarkus.logging.Log;
 import io.quarkus.picocli.runtime.annotations.TopCommand;
 import jakarta.inject.Inject;
-import org.jboss.resteasy.reactive.common.NotImplementedYet;
 import picocli.CommandLine;
 
 
@@ -22,15 +23,23 @@ class StaticFetchCommand implements Runnable {
 
     @Override
     public void run() {
-        warApiService.fetchAndStoreStaticData(dryRun);
+        for (ShardConfEntity shardConf : ShardConfEntity.listAllActive()) {
+            Log.info(String.format("Processing server %s", shardConf.getName()));
+            warApiService.fetchAndStoreStaticData(shardConf, dryRun);
+        }
     }
 }
 
 @CommandLine.Command(name = "daemon", description = "Continuously fetch api data")
 class DaemonFetchCommand implements Runnable {
+    @Inject
+    WarApiService warApiService;
 
     @Override
     public void run() {
-        throw new NotImplementedYet();
+        for (ShardConfEntity shardConf : ShardConfEntity.listAllActive()) {
+            Log.info(String.format("Processing server %s", shardConf.getName()));
+            warApiService.fetchAndStoreDynamicData(shardConf);
+        }
     }
 }

@@ -2,8 +2,9 @@ package com.woc.entity;
 
 import com.woc.warapi_client.dto.MapData;
 import com.woc.warapi_client.dto.MapTextItem;
-import io.quarkus.mongodb.panache.PanacheMongoEntity;
+import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,19 +20,28 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class FoxholeMapEntity extends PanacheMongoEntity {
-    private String name;
-    private int regionId;
-    private List<MapTextItem> mapTextItems;
-    private long lastUpdated;
-    private int version;
+public class FoxholeMapEntity extends PanacheMongoEntityBase {
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Id {
+        private String warId;
+        private int regionId;
+    }
 
-    public static FoxholeMapEntity from(String name, MapData data) {
+    private Id id;
+    private String name;
+    private List<MapTextItem> textItems;
+
+    public static List<FoxholeMapEntity> listAllByWarID(String warId) {
+        return list("_id.warId", warId);
+    }
+
+    public static FoxholeMapEntity from(String name, String currentWarId, MapData data) {
         return new FoxholeMapEntity()
                 .setName(name)
-                .setRegionId(data.regionId())
-                .setMapTextItems(data.mapTextItems())
-                .setLastUpdated(data.lastUpdated())
-                .setVersion(data.version());
+                .setId(new Id(currentWarId, data.regionId()))
+                .setTextItems(data.mapTextItems());
     }
 }
