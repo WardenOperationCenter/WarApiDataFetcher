@@ -2,3 +2,9 @@ quarkus:
   mongodb:
     connection-string: "mongodb://localhost:27017"
     database: "Test"
+  scheduler:
+    start-mode: forced
+  log:
+    category:
+      "org.mongodb":
+        level: WARN

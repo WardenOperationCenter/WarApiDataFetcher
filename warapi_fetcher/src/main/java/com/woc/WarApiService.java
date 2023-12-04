@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @ApplicationScoped
 public class WarApiService {
-    public void fetchAndStoreStaticData(ShardConfEntity shardConf, boolean dryRun) {
+    public void fetchAndStoreStaticData(ShardConfEntity shardConf) {
         Log.info("Starting fetching of static data of the war.");
 
         WarApiClient warApiClient = WarApiClient.instantiate(shardConf.getUrl());
@@ -37,35 +37,38 @@ public class WarApiService {
         }
 
         WarStatusEntity warStatusEntity = WarStatusEntity.from(shardConf.getShard(), Instant.now(), warStatus);
-        if (!dryRun) {
-            warStatusEntity.persist();
-        }
+        warStatusEntity.persist();
+
 
         Set<String> mapNames = warApiClient.mapNamesList();
         Log.info(String.format("%d maps names have been fetched.", mapNames.size()));
 
         for (String mapName : mapNames) {
-            processMapData(warApiClient, mapName, warStatusEntity.getWarId(), dryRun);
+            processMapData(warApiClient, mapName, warStatusEntity.getWarId());
         }
 
         Log.info("Static processing ended with success.");
     }
 
-    private void processMapData(WarApiClient warApiClient, String mapName, String currentWarId, boolean dryRun) {
+    private void processMapData(WarApiClient warApiClient, String mapName, String currentWarId) {
         Log.info(String.format("\tProcessing map %s.", mapName));
         MapData mapData = warApiClient.mapStaticData(mapName);
-        if (!dryRun) {
-            FoxholeMapEntity.from(mapName, currentWarId, mapData).persist();
-        }
+        FoxholeMapEntity.from(mapName, currentWarId, mapData).persist();
     }
 
-    public void fetchAndStoreDynamicData(ShardConfEntity shardConf) {
+    public void fetchAndStoreDynamicData(ShardConfEntity shardConf, boolean fetchStatic) {
         WarApiClient warApiClient = WarApiClient.instantiate(shardConf.getUrl());
 
         WarStatus warStatus = warApiClient.warStatus();
         if (WarStatusEntity.findByIdOptional(warStatus.warId()).isEmpty()) {
-            Log.error(String.format("Data are not initialized for war %s, you should first run the static download", warStatus.warId()));
-            return;
+            if(fetchStatic){
+                Log.info(String.format("Missing static data for war %s, fetching first", warStatus.warId()));
+                this.fetchAndStoreStaticData(shardConf);
+            }
+            else {
+                Log.error(String.format("Data are not initialized for war %s, you should first run the static download", warStatus.warId()));
+                return;
+            }
         }
 
         WarStatusEntity warStatusEntity = WarStatusEntity.from(shardConf.getShard(), Instant.now(), warStatus);
@@ -75,6 +78,8 @@ public class WarApiService {
         for (FoxholeMapEntity foxholeMapEntity : FoxholeMapEntity.listAllByWarID(warStatusEntity.getWarId())) {
             this.handleMapDynamicData(warApiClient, foxholeMapEntity);
         }
+
+        Log.info("");
     }
 
     private void handleMapDynamicData(WarApiClient warApiClient, FoxholeMapEntity foxholeMapEntity) {
@@ -108,5 +113,13 @@ public class WarApiService {
 
         //Update etags for next query
         existingEtag.persistOrUpdate();
+    }
+
+    public void fetchAllServersDynamicData(){
+        for (ShardConfEntity shardConf : ShardConfEntity.listAllActive()) {
+            Log.info(String.format("Processing server %s", shardConf.getName()));
+            this.fetchAndStoreDynamicData(shardConf, false);
+            Log.info(String.format("Data for server %s successfully fetched", shardConf.getName()));
+        }
     }
 }

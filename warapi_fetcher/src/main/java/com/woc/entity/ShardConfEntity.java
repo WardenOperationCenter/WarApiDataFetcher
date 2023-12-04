@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Represent a MongoDB Document with the data about a war
  */
-@MongoEntity(collection = "apiConf")
+@MongoEntity(collection = "shardApiConf")
 @NoArgsConstructor
 @Getter
 @Setter
