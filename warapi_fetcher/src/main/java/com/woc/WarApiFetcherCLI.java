@@ -40,7 +40,7 @@ class DynamicFetchCommand implements Runnable {
 
     @Override
     public void run() {
-        warApiService.fetchAllServersDynamicData();
+        warApiService.fetchAllServersDynamicData(false);
     }
 }
 
@@ -65,7 +65,7 @@ class DaemonFetchCommand implements Runnable {
                     runningThread = Thread.currentThread();
                     Log.info("Running job to DL data");
                     Instant start = Instant.now();
-                    warApiService.fetchAllServersDynamicData();
+                    warApiService.fetchAllServersDynamicData(true);
                     Instant end = Instant.now();
                     Duration timeElapsed = Duration.between(start, end);
                     Log.info(String.format("Job ended in %ss %sms",  timeElapsed.toSeconds(), timeElapsed.toMillisPart()));

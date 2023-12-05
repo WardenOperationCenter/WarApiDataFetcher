@@ -115,10 +115,10 @@ public class WarApiService {
         existingEtag.persistOrUpdate();
     }
 
-    public void fetchAllServersDynamicData(){
+    public void fetchAllServersDynamicData(boolean fetchStatic){
         for (ShardConfEntity shardConf : ShardConfEntity.listAllActive()) {
             Log.info(String.format("Processing server %s", shardConf.getName()));
-            this.fetchAndStoreDynamicData(shardConf, false);
+            this.fetchAndStoreDynamicData(shardConf, fetchStatic);
             Log.info(String.format("Data for server %s successfully fetched", shardConf.getName()));
         }
     }
