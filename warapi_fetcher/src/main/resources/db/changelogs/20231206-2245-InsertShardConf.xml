@@ -1,0 +1,42 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mongodb="http://www.liquibase.org/xml/ns/mongodb"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+         http://www.liquibase.org/xml/ns/mongodb
+         http://www.liquibase.org/xml/ns/mongodb/liquibase-mongodb-latest.xsd">
+
+
+    <changeSet id="20231206-2245-1" author="rebmahcs">
+        <comment>Init the API configuration if needed</comment>
+        <mongodb:createCollection collectionName="shardApiConf"/>
+
+        <mongodb:insertMany collectionName="shardApiConf">
+            <mongodb:documents>
+                [
+                    {
+                        "shard": 1,
+                        "url": "https://war-service-live.foxholeservices.com/api",
+                        "status": "ACTIVE",
+                        "name": "Alpha"
+                    },
+                    {
+                        "shard": 2,
+                        "url": "https://war-service-live-2.foxholeservices.com/api",
+                        "status": "INACTIVE",
+                        "name": "Bravo"
+                    },
+                    {
+                        "shard": 3,
+                        "url": "https://war-service-live-3.foxholeservices.com/api",
+                        "status": "ACTIVE",
+                        "name": "Charlie"
+                    }
+                ]
+            </mongodb:documents>
+        </mongodb:insertMany>
+    </changeSet>
+
+</databaseChangeLog>

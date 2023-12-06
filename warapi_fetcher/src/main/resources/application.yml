@@ -2,6 +2,9 @@ quarkus:
   mongodb:
     connection-string: "mongodb://localhost:27017"
     database: "WoC"
+  liquibase-mongodb:
+    migrate-at-start: true
+    change-log: db/main.xml
   scheduler:
     start-mode: forced
   log:
