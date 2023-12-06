@@ -1,0 +1,115 @@
+<mxfile modified="2023-12-06T22:25:53.438Z" host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1.2 Safari/605.1.15" etag="Z9kKTk8-5ddyermyFU4S" version="22.1.7" type="github">
+  <diagram id="Ht1M8jgEwFfnCIfOTk4-" name="Page-1">
+    <mxGraphModel dx="1207" dy="701" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-4" value="Foxhole Servers&amp;nbsp;Data DB" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.webicons.mongodb;gradientColor=#DFDEDE" vertex="1" parent="1">
+          <mxGeometry x="880" y="50.60000000000002" width="102.4" height="102.4" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-5" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="30" y="30" width="120" height="143.60000000000002" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-3" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" vertex="1" parent="cCRL7Gyb3AUBUppwrwxP-5">
+          <mxGeometry width="120" height="143.6" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://pbs.twimg.com/profile_images/978319052740313088/sXb7GovP_400x400.jpg;" vertex="1" parent="cCRL7Gyb3AUBUppwrwxP-5">
+          <mxGeometry x="20" y="43.60000000000002" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-6" value="War API" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="55" y="173.60000000000002" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="150" y="102.19999999999982" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-7" target="cCRL7Gyb3AUBUppwrwxP-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-7" value="Fetcher" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.webicons.java;gradientColor=#DFDEDE" vertex="1" parent="1">
+          <mxGeometry x="250" y="50.6" width="102.4" height="102.4" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-10" target="cCRL7Gyb3AUBUppwrwxP-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="709.8" y="361.2352941176471" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="558" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-15" value="When Region data changed" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cCRL7Gyb3AUBUppwrwxP-14">
+          <mxGeometry x="0.1055" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-10" value="AWS SNS&lt;br&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.sns;fillColor=#D9A741;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="530" y="396.45" width="76.5" height="76.5" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.48;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-7" target="cCRL7Gyb3AUBUppwrwxP-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="301" y="433" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-12" value="&amp;nbsp;Notify New Data availability" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="cCRL7Gyb3AUBUppwrwxP-11">
+          <mxGeometry x="0.1474" y="5" relative="1" as="geometry">
+            <mxPoint x="-25" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-16" target="cCRL7Gyb3AUBUppwrwxP-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="931" y="512" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-16" value="OnEndOfWar" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+          <mxGeometry x="780" y="472.95" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="568.2941176470588" y="480.00000000000006" as="sourcePoint" />
+            <mxPoint x="780" y="519" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="568" y="519" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-18" target="cCRL7Gyb3AUBUppwrwxP-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="931" y="361" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-18" value="Region Status Alerter" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+          <mxGeometry x="780" y="321.45" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-22" target="cCRL7Gyb3AUBUppwrwxP-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-22" value="Data Visualisation app" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.mobile_client;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="70.3" width="40.5" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-25" value="Will detect changes in Region status ( Frontlines / High Activity / ... )" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="590" y="173.6" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-26" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;dashed=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-25" target="cCRL7Gyb3AUBUppwrwxP-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-27" value="Will perform some work at the end of a war ( Like moving data to an archiving db and computing additional stats)" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="550" y="560" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-28" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;dashed=1;" edge="1" parent="1" source="cCRL7Gyb3AUBUppwrwxP-27" target="cCRL7Gyb3AUBUppwrwxP-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cCRL7Gyb3AUBUppwrwxP-31" value="Other Ideas:&lt;br&gt;&lt;ol&gt;&lt;li&gt;&quot;Briefing / Strategy&quot; app for Regiments&lt;/li&gt;&lt;li&gt;Setup notification and attention regions on location we have in the API&lt;/li&gt;&lt;li&gt;&lt;br&gt;&lt;/li&gt;&lt;/ol&gt;" style="shape=note;size=20;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="950" y="240" width="210" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
