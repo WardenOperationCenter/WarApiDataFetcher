@@ -1,4 +1,8 @@
 quarkus:
+  container-image:
+    build: true
+  jib:
+    native-arguments: daemon
   mongodb:
     connection-string: "mongodb://localhost:27017"
     database: "WoC"

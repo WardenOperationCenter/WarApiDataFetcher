@@ -8,6 +8,21 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - fetcher
+
+  fetcher:
+    container_name: woc_fetcher
+    image: rebmahcs/warapi_fetcher:1.0.0-SNAPSHOT
+    entrypoint: ["/bin/sh"]
+    environment:
+      - QUARKUS_MONGODB_CONNECTION_STRING=mongodb://mongodb:27017
+    networks:
+      - fetcher
+
 
 volumes:
   mongodb_data:
+
+networks:
+  fetcher:
